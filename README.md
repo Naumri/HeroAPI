@@ -8,8 +8,6 @@
 
 **HeroAPI** is a robust backend solution designed to manage hero data through a powerful RESTful API.
 
-This project is currently in the initial setup phase (`v0.0.1`). Future versions will include full **CRUD (Create, Read, Update, Delete)** operations for managing a list of heroes, designed to serve a separate frontend application.
-
 ## 🚀 Technologies Used (Backend)
 
 The current core technologies used in this repository are:
@@ -17,6 +15,9 @@ The current core technologies used in this repository are:
 - **TypeScript:** Used for type safety and scalability.
 - **Node.js:** The JavaScript runtime environment.
 - **NestJS:** A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
+- **Prisma:** A modern, next-generation ORM used to manage the database and migrations.
+- **MySQL:** Este projeto utiliza MySQL como banco de dados principal.  
+  Certifique-se de ter um servidor MySQL rodando localmente (ou acesso a uma instância remota) e configure a variável `DATABASE_URL` adequadamente no arquivo `.env`.
 
 ---
 
@@ -48,11 +49,31 @@ You will need the following software installed:
     # or yarn install
     ```
 
-3.  **Run the development server (Currently only the base NestJS server):**
-    ```bash
-    npm run start:dev
-    # or yarn start:dev
-    ```
+3.  **Configure the Database**
+
+- Create a file named `.env` inside the **backend** folder.
+
+- Set the `DATABASE_URL` variable to point to your local MySQL instance.
+
+  **Example configuration (.env):**
+
+  ```env
+  DATABASE_URL="mysql://USER:PASSWORD@localhost:3306/DATABASE"
+  ```
+
+4. **Execute the Migrations and Generate the Prisma Client:**
+
+   After configuring the `.env` file, apply the existing migration with:
+
+   ```bash
+   npx prisma migrate deploy
+   ```
+
+5. **Run the development server (Currently only the base NestJS server):**
+   ```bash
+   npm run start:dev
+   # or yarn start:dev
+   ```
 
 The application should now be running at `http://localhost:3000`.
 
