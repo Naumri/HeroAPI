@@ -16,8 +16,6 @@ The current core technologies used in this repository are:
 - **Node.js:** The JavaScript runtime environment.
 - **NestJS:** A progressive Node.js framework for building efficient, reliable and scalable server-side applications.
 - **Prisma:** A modern, next-generation ORM used to manage the database and migrations.
-- **MySQL:** Este projeto utiliza MySQL como banco de dados principal.  
-  Certifique-se de ter um servidor MySQL rodando localmente (ou acesso a uma instância remota) e configure a variável `DATABASE_URL` adequadamente no arquivo `.env`.
 
 ---
 
@@ -32,6 +30,7 @@ You will need the following software installed:
 - Node.js (LTS version)
 - npm (or yarn/pnpm)
 - Git
+- MySQL
 
 ### 🔧 Installation Steps
 
