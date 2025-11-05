@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import type { CreateHeroDto } from './dto/createHero.dto';
 import { HeroService } from './hero.service';
 
@@ -27,6 +35,12 @@ export class HeroController {
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: CreateHeroDto) {
     const hero = await this.heroService.updateHero(Number(id), data);
+    return hero;
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const hero = await this.heroService.deleteHero(Number(id));
     return hero;
   }
 }

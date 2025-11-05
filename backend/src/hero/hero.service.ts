@@ -87,4 +87,25 @@ export class HeroService {
       );
     }
   }
+
+  async deleteHero(id: number) {
+    try {
+      const hero = await this.prisma.hero.delete({ where: { id } });
+      return hero;
+    } catch (e) {
+      if (e instanceof HttpException) throw e;
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025')
+          throw new NotFoundException(`Hero with ID ${id} not found.`);
+        if (e.code === 'P2003')
+          throw new ConflictException(
+            `Hero with ID ${id} cannot be deleted due to associated records.`,
+          );
+      }
+      console.error('Error when deleting a hero:', e);
+      throw new InternalServerErrorException(
+        'The hero delete operation could not be completed.',
+      );
+    }
+  }
 }
