@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -13,8 +12,8 @@ model Hero {
   name       String    @unique
   alias      String    @unique
   power      String
-  team       Team      @relation(fields: [teamId], references: [id])
-  teamId     Int
+  team       Team?     @relation(fields: [teamId], references: [id])
+  teamId     Int?
   isVillain  Boolean   @default(false)
   origin     String?
   universe   Universe? @relation(fields: [universeId], references: [id])
