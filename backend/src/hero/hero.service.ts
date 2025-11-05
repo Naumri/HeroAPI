@@ -3,6 +3,7 @@ import {
   HttpException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateHeroDto } from './dto/createHero.dto';
@@ -40,13 +41,24 @@ export class HeroService {
       const heroes = await this.prisma.hero.findMany();
       return heroes;
     } catch (e) {
-      if (e instanceof HttpException) {
-        throw e;
-      }
-
-      console.error('Error when creating a hero:', e);
+      if (e instanceof HttpException) throw e;
+      console.error('Error when fetching a heroes:', e);
       throw new InternalServerErrorException(
-        'The hero creation operation could not be completed.',
+        'The heroes retrieval operation could not be completed.',
+      );
+    }
+  }
+
+  async getHero(id: number) {
+    try {
+      const hero = await this.prisma.hero.findUnique({ where: { id } });
+      if (!hero) throw new NotFoundException(`Hero with ID ${id} not found.`);
+      return hero;
+    } catch (e) {
+      if (e instanceof HttpException) throw e;
+      console.error('Error when fetching a hero:', e);
+      throw new InternalServerErrorException(
+        'The hero retrieval operation could not be completed.',
       );
     }
   }
