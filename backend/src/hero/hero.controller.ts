@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import type { CreateHeroDto } from './dto/createHero.dto';
 import { HeroService } from './hero.service';
 
@@ -21,6 +21,12 @@ export class HeroController {
   @Get(':id')
   async getForId(@Param('id') id: string) {
     const hero = await this.heroService.getHero(Number(id));
+    return hero;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() data: CreateHeroDto) {
+    const hero = await this.heroService.updateHero(Number(id), data);
     return hero;
   }
 }

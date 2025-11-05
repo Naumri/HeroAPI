@@ -62,4 +62,29 @@ export class HeroService {
       );
     }
   }
+
+  async updateHero(id: number, heroData: CreateHeroDto) {
+    try {
+      const hero = await this.prisma.hero.update({
+        where: { id },
+        data: heroData,
+      });
+      return hero;
+    } catch (e) {
+      if (e instanceof HttpException) throw e;
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025')
+          throw new NotFoundException(`Hero with ID ${id} not found.`);
+        if (e.code === 'P2002')
+          throw new ConflictException(
+            `The hero update failed: value of ${e.meta?.target} already exists.`,
+          );
+      }
+
+      console.error('Error when updating a hero:', e);
+      throw new InternalServerErrorException(
+        'The hero update operation could not be completed.',
+      );
+    }
+  }
 }
